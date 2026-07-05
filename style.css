@@ -2,9 +2,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-} 
+}
 body {
-  background-color: #121213; 
+  background-color: #121213;
   color: white;
   font-family: "Arial", sans-serif;
   display: flex;
@@ -25,6 +25,9 @@ h1 {
   margin-bottom: 10px;
   letter-spacing: 2px;
 }
+.guess-word {
+  font-size:20px;
+}
 
 #hint-container {
   font-size: 1.2rem;
@@ -42,7 +45,7 @@ h1 {
 }
 
 button {
-  background-color: #538d4e; 
+  background-color: #538d4e;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -52,6 +55,7 @@ button {
   border-radius: 4px;
   transition: background 0.2s ease;
   margin: 0 5px;
+  margin-top: 5px;
 }
 
 button:hover {

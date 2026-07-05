@@ -64,13 +64,12 @@ function setupBoard() {
 function resetGame() {
   setupBoard();
   chooseRandomWord();
-  hintText.textContent = secretHint;
+  hintText.textContent = "Hint:  " + secretHint;
   startBtn.classList.add("hidden");
   restartBtn.classList.add("hidden");
   isGameStarted = true;
   currentAttempt = 0;
   currentLetter = 0;
-  console.log(secretWord);
 }
 function correctGuess(row) {
   for (let i = 0; i < 5; i++) {
@@ -83,7 +82,6 @@ function correctGuess(row) {
 startBtn.addEventListener("click", () => {
   chooseRandomWord();
   resetGame();
-  console.log(secretWord);
 });
 
 restartBtn.addEventListener("click", () => {
@@ -109,11 +107,9 @@ window.addEventListener("keydown", (event) => {
     return;
   }
 
-  // 2. შემოწმების ლოგიკა
   if (key === "Enter") {
     event.preventDefault();
 
-    // ა) შემოწმება: აქვს თუ არა მოთამაშეს ყველა ასო აკრეფილი?
     if (currentLetter < 5) {
       return;
     }
@@ -126,21 +122,40 @@ window.addEventListener("keydown", (event) => {
     const secretLetters = secretWord.split("");
     const guessLetters = userGuess.split("");
 
-    for (let i = 0; i < 5; i++) {
-      const currentBox = activeRow.querySelector(`.col-${i}`);
+    const boxStatuses = new Array(5).fill("");
+    const letterCounts = {};
 
+    for (let i = 0; i < 5; i++) {
+      const letter = secretLetters[i];
+      letterCounts[letter] = (letterCounts[letter] || 0) + 1;
+    }
+
+    for (let i = 0; i < 5; i++) {
       if (guessLetters[i] === secretLetters[i]) {
-        currentBox.classList.add("correct");
-      } else if (secretLetters.includes(guessLetters[i])) {
-        currentBox.classList.add("almost");
-      } else {
-        currentBox.classList.add("absent");
+        boxStatuses[i] = "correct";
+        letterCounts[guessLetters[i]]--;
       }
     }
 
-    // დ) მოგების შემოწმება
+    for (let i = 0; i < 5; i++) {
+      if (boxStatuses[i] === "correct") continue;
+
+      const currentLetter = guessLetters[i];
+
+      if (letterCounts[currentLetter] && letterCounts[currentLetter] > 0) {
+        boxStatuses[i] = "almost";
+        letterCounts[currentLetter]--;
+      } else {
+        boxStatuses[i] = "absent";
+      }
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const currentBox = activeRow.querySelector(`.col-${i}`);
+      currentBox.classList.add(boxStatuses[i]);
+    }
+
     if (userGuess === secretWord) {
-      console.log("შენ მოიგე! 🎉");
       correctGuess(activeRow);
       restartBtn.classList.remove("hidden");
       isGameStarted = false;
@@ -158,7 +173,6 @@ window.addEventListener("keydown", (event) => {
     return;
   }
 
-  // 3. ასოების აკრეფის ლოგიკა
   if (key.length === 1 && key.match(/[a-z]/i)) {
     if (currentLetter >= 5) return;
 
