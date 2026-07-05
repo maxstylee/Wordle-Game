@@ -1,1 +1,1 @@
-# Wordle-Game
+# The game is not finished yet, but you can still have fun with this version!

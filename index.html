@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Wordle Game</title>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Wordle Game</h1>
+
+        <div class="controls">
+            <button id="start-btn">Start Game</button>
+            <button id="restart-btn" class="hidden">Restart</button>
+        </div>
+
+        <div id="hint-container"> <span id="hint-text">Click Start to play!</span></div>
+
+        <div id="game-board">
+            <div id="try-1" class="row"></div>
+            <div id="try-2" class="row"></div>
+            <div id="try-3" class="row"></div>
+            <div id="try-4" class="row"></div>
+            <div id="try-5" class="row"></div>
+            <div id="try-6" class="row"></div>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
