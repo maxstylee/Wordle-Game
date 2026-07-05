@@ -39,7 +39,6 @@ function chooseRandomWord() {
   secretHint = randomTarget.hint;
   // console.log("საიდუმლო სიტყვაა:", secretWord);
 }
-chooseRandomWord();
 const rows = document.querySelectorAll(".row");
 const startBtn = document.getElementById("start-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -81,13 +80,14 @@ function correctGuess(row) {
   }
 }
 startBtn.addEventListener("click", () => {
+  chooseRandomWord();
   resetGame();
+  console.log(secretWord);
 });
 
 restartBtn.addEventListener("click", () => {
   resetGame();
 });
-console.log(secretWord);
 
 window.addEventListener("keydown", (event) => {
   if (!isGameStarted) return;
@@ -140,9 +140,9 @@ window.addEventListener("keydown", (event) => {
     // დ) მოგების შემოწმება
     if (userGuess === secretWord) {
       console.log("შენ მოიგე! 🎉");
-      correctGuess(activeRow); 
+      correctGuess(activeRow);
       restartBtn.classList.remove("hidden");
-      isGameStarted = false; 
+      isGameStarted = false;
       return;
     }
 
