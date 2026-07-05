@@ -70,6 +70,7 @@ function resetGame() {
   isGameStarted = true;
   currentAttempt = 0;
   currentLetter = 0;
+  console.log(secretWord);
 }
 function correctGuess(row) {
   for (let i = 0; i < 5; i++) {
