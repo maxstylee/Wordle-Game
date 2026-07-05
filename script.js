@@ -111,45 +111,49 @@ window.addEventListener("keydown", (event) => {
   // 2. შემოწმების ლოგიკა
   if (key === "Enter") {
     event.preventDefault();
-    if (secretWord === activeRow.textContent) {
-      correctGuess(activeRow);
-      console.log("you win");
-      restartBtn.classList.remove("hidden");
-      return;
-    }
+
+    // ა) შემოწმება: აქვს თუ არა მოთამაშეს ყველა ასო აკრეფილი?
     if (currentLetter < 5) {
       return;
     }
-    currentAttempt++;
-    currentLetter = 0;
-
     let userGuess = "";
     for (let i = 0; i < 5; i++) {
       const box = activeRow.querySelector(`.col-${i}`);
       userGuess += box.textContent;
     }
+
     const secretLetters = secretWord.split("");
     const guessLetters = userGuess.split("");
-    const boxStatuses = Array(5).fill("absent");
-    if (secretWord === activeRow.textContent) {
-      correctGuess(activeRow);
-      return;
-    }
+
     for (let i = 0; i < 5; i++) {
       const currentBox = activeRow.querySelector(`.col-${i}`);
-      const indexInSecret = secretLetters.indexOf(guessLetters[i]);
 
       if (guessLetters[i] === secretLetters[i]) {
-        boxStatuses[i] = currentBox.classList.add("correct");
-      }
-      if (indexInSecret !== -1) {
-        boxStatuses[i] = currentBox.classList.add("almost");
+        currentBox.classList.add("correct");
+      } else if (secretLetters.includes(guessLetters[i])) {
+        currentBox.classList.add("almost");
+      } else {
+        currentBox.classList.add("absent");
       }
     }
+
+    // დ) მოგების შემოწმება
+    if (userGuess === secretWord) {
+      console.log("შენ მოიგე! 🎉");
+      correctGuess(activeRow); 
+      restartBtn.classList.remove("hidden");
+      isGameStarted = false; 
+      return;
+    }
+
+    currentAttempt++;
+    currentLetter = 0;
 
     if (currentAttempt >= 6) {
       restartBtn.classList.remove("hidden");
+      isGameStarted = false;
     }
+
     return;
   }
 

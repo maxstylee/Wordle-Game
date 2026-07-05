@@ -94,6 +94,10 @@ button:hover {
   font-weight: bold;
   text-transform: uppercase;
 }
+.letter-box.absent {
+  background-color: #3b0d0d;
+  color: white;
+}
 .letter-box.almost {
   background-color: #ffb30f;
   color: white;
